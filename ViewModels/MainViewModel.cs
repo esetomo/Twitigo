@@ -16,6 +16,7 @@ namespace Twitigo.ViewModels
 
         public MainViewModel()
         {
+            this.reloadCommand = new DelegateCommand(ReloadCommandExecute);
             this.pinRequestCommand = new DelegateCommand(PinRequestCommandExecute);
             this.pinEnterCommand = new DelegateCommand(PinEnterCommandExecute);
 
@@ -36,23 +37,28 @@ namespace Twitigo.ViewModels
                 new TabViewModel
                 {
                     Header = "Home",
-                    Tweets = from tweet in twitter.Status
-                             where tweet.Type == StatusType.Home
-                             select tweet,
+                    Query = () => from tweet in twitter.Status
+                                  where tweet.Type == StatusType.Home
+                                  select tweet,
                 },
                 new TabViewModel
                 {
                     Header = "Mentions",
-                    Tweets = from tweet in twitter.Status
-                             where tweet.Type == StatusType.Mentions
-                             select tweet,
+                    Query = () => from tweet in twitter.Status
+                                  where tweet.Type == StatusType.Mentions
+                                  select tweet,
                 },
             };
 
             this.SelectedTab = this.Tabs.First();
         }
 
-        private async void PinRequestCommandExecute(object parameter)
+        private void ReloadCommandExecute(object parameter)
+        {
+            this.SelectedTab.Reload();
+        }
+
+        private void PinRequestCommandExecute(object parameter)
         {
             Properties.Settings.Default.Save();
 
@@ -169,6 +175,15 @@ namespace Twitigo.ViewModels
         #endregion
 
         #region Commands
+        private readonly ICommand reloadCommand;
+        public ICommand ReloadCommand
+        {
+            get
+            {
+                return this.reloadCommand;
+            }
+        }
+
         private readonly ICommand pinRequestCommand;
         public ICommand PinRequestCommand
         {

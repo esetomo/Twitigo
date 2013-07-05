@@ -22,9 +22,6 @@
         <DataTemplate x:Key="TabHeader">
             <TextBlock Text="{Binding Header}" />
         </DataTemplate>
-        <ItemsPanelTemplate x:Key="TweetsPanel">
-            <VirtualizingStackPanel/>
-        </ItemsPanelTemplate>
         <ControlTemplate x:Key="TweetsTemplate">
             <ScrollViewer>
                 <ItemsPresenter />
@@ -33,14 +30,15 @@
         <DataTemplate x:Key="TabContent">
             <ItemsControl ItemsSource="{Binding Tweets}"
                           Template="{StaticResource TweetsTemplate}"
-                          ItemTemplate="{StaticResource Tweet}"
-                          ItemsPanel="{StaticResource TweetsPanel}"/>
+                          ItemTemplate="{StaticResource Tweet}" />
         </DataTemplate>
     </Window.Resources>
     <DockPanel>
         <Ribbon DockPanel.Dock="Top">
             <RibbonTab Header="Home">
-
+                <RibbonGroup>
+                    <RibbonButton Label="再読み込み" Command="{Binding ReloadCommand}" />
+                </RibbonGroup>
             </RibbonTab>
             <RibbonTab Header="設定">
                 <RibbonGroup>
