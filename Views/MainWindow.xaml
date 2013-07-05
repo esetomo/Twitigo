@@ -1,9 +1,62 @@
 ﻿<RibbonWindow x:Class="Twitigo.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow">
+        Title="MainWindow" Height="498" Width="362">
+    <Window.Resources>
+        <DataTemplate x:Key="Tweet">
+            <DockPanel Margin="4" HorizontalAlignment="Stretch">
+                <Grid Width="48" Height="48" VerticalAlignment="Top">
+                    <Border Name="mask" CornerRadius="6" Background="White" />
+                    <Image Source="{Binding User.ProfileImageUrl}">
+                        <Image.OpacityMask>
+                            <VisualBrush Visual="{Binding ElementName=mask}" />
+                        </Image.OpacityMask>
+                    </Image>
+                </Grid>
+                <StackPanel>
+                    <TextBlock Text="{Binding User.Name}"/>
+                    <TextBlock Text="{Binding Text}" TextWrapping="Wrap"/>
+                </StackPanel>
+            </DockPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="TabHeader">
+            <TextBlock Text="{Binding Header}" />
+        </DataTemplate>
+        <ItemsPanelTemplate x:Key="TweetsPanel">
+            <VirtualizingStackPanel/>
+        </ItemsPanelTemplate>
+        <ControlTemplate x:Key="TweetsTemplate">
+            <ScrollViewer>
+                <ItemsPresenter />
+            </ScrollViewer>
+        </ControlTemplate>
+        <DataTemplate x:Key="TabContent">
+            <ItemsControl ItemsSource="{Binding Tweets}"
+                          Template="{StaticResource TweetsTemplate}"
+                          ItemTemplate="{StaticResource Tweet}"
+                          ItemsPanel="{StaticResource TweetsPanel}"/>
+        </DataTemplate>
+    </Window.Resources>
     <DockPanel>
-        <Ribbon DockPanel.Dock="Top"/>
-        <TreeView ItemsSource="Tweets" />
+        <Ribbon DockPanel.Dock="Top">
+            <RibbonTab Header="Home">
+
+            </RibbonTab>
+            <RibbonTab Header="設定">
+                <RibbonGroup>
+                    <RibbonTextBox Label="ConsumerKey" Text="{Binding ConsumerKey, UpdateSourceTrigger=PropertyChanged}"/>
+                    <RibbonTextBox Label="ConsumerSecret" Text="{Binding ConsumerSecret, UpdateSourceTrigger=PropertyChanged}"/>
+                    <RibbonButton Label="認証" Command="{Binding PinRequestCommand}"/>
+                </RibbonGroup>
+                <RibbonGroup>
+                    <RibbonTextBox Label="PinCode" Text="{Binding PinCode}"/>
+                    <RibbonButton Label="入力" Command="{Binding PinEnterCommand}"/>
+                </RibbonGroup>
+            </RibbonTab>
+        </Ribbon>
+        <TabControl ItemsSource="{Binding Tabs}"
+                    ItemTemplate="{StaticResource TabHeader}"
+                    ContentTemplate="{StaticResource TabContent}" 
+                    SelectedItem="{Binding SelectedTab}"/>
     </DockPanel>
 </RibbonWindow>
