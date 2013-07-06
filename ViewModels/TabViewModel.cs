@@ -4,11 +4,41 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LinqToTwitter;
+using System.Windows.Input;
 
 namespace Twitigo.ViewModels
 {
     public class TabViewModel : ViewModelBase
     {
+        public TabViewModel()
+        {
+            this.replyCommand = new DelegateCommand(ReplyCommandExecute);
+            this.retweetCommand = new DelegateCommand(RetweetCommandExecute);
+            this.favoriteCommand = new DelegateCommand(FavoriteCommandExecute);
+        }
+
+        private void ReplyCommandExecute(object parameter)
+        {
+            var status = parameter as Status;
+
+            // throw new NotImplementedException("Reply Action");
+        }
+        
+        private void RetweetCommandExecute(object parameter)
+        {
+            var status = parameter as Status;
+
+            throw new NotImplementedException("Retweet Action");
+        }
+
+        private void FavoriteCommandExecute(object parameter)
+        {
+            var status = parameter as Status;
+
+            throw new NotImplementedException("Favorite Action");
+        }
+
+
         public void Reload()
         {
             _Tweets = null;
@@ -66,6 +96,35 @@ namespace Twitigo.ViewModels
                     _Tweets = _Query();
 
                 return _Tweets;
+            }
+        }
+        #endregion
+
+        #region Commands
+        private readonly ICommand replyCommand;
+        public ICommand ReplyCommand
+        {
+            get
+            {
+                return replyCommand;
+            }
+        }
+
+        private readonly ICommand retweetCommand;
+        public ICommand RetweetCommand
+        {
+            get
+            {
+                return this.retweetCommand;
+            }
+        }
+
+        private readonly ICommand favoriteCommand;
+        public ICommand FavoriteCommand
+        {
+            get
+            {
+                return this.favoriteCommand;
             }
         }
         #endregion

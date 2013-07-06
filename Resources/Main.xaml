@@ -1,0 +1,29 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:v="clr-namespace:Twitigo.Views">
+    <DataTemplate x:Key="Tweet">
+        <v:TweetPanel />
+    </DataTemplate>
+    
+    <DataTemplate x:Key="TabHeader">
+        <TextBlock Text="{Binding Header}" />
+    </DataTemplate>
+    
+    <ControlTemplate x:Key="TweetsTemplate">
+        <StackPanel>
+            <Image Width="300"
+                   Height="300"
+                   Source="https://abs.twimg.com/a/1372759208/images/resources/twitter-bird-white-on-blue.png" 
+                   Margin="450"/>
+            <ScrollViewer>
+                <ItemsPresenter />
+            </ScrollViewer>
+        </StackPanel>
+    </ControlTemplate>
+    
+    <DataTemplate x:Key="TabContent">
+        <ItemsControl ItemsSource="{Binding Tweets}"
+                      Template="{StaticResource TweetsTemplate}"
+                      ItemTemplate="{StaticResource Tweet}" />
+    </DataTemplate>
+</ResourceDictionary>

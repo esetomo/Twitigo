@@ -3,35 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="498" Width="362">
     <Window.Resources>
-        <DataTemplate x:Key="Tweet">
-            <DockPanel Margin="4" HorizontalAlignment="Stretch">
-                <Grid Width="48" Height="48" VerticalAlignment="Top">
-                    <Border Name="mask" CornerRadius="6" Background="White" />
-                    <Image Source="{Binding User.ProfileImageUrl}">
-                        <Image.OpacityMask>
-                            <VisualBrush Visual="{Binding ElementName=mask}" />
-                        </Image.OpacityMask>
-                    </Image>
-                </Grid>
-                <StackPanel>
-                    <TextBlock Text="{Binding User.Name}"/>
-                    <TextBlock Text="{Binding Text}" TextWrapping="Wrap"/>
-                </StackPanel>
-            </DockPanel>
-        </DataTemplate>
-        <DataTemplate x:Key="TabHeader">
-            <TextBlock Text="{Binding Header}" />
-        </DataTemplate>
-        <ControlTemplate x:Key="TweetsTemplate">
-            <ScrollViewer>
-                <ItemsPresenter />
-            </ScrollViewer>
-        </ControlTemplate>
-        <DataTemplate x:Key="TabContent">
-            <ItemsControl ItemsSource="{Binding Tweets}"
-                          Template="{StaticResource TweetsTemplate}"
-                          ItemTemplate="{StaticResource Tweet}" />
-        </DataTemplate>
+        <ResourceDictionary Source="../Resources/Main.xaml" />
     </Window.Resources>
     <DockPanel>
         <Ribbon DockPanel.Dock="Top">

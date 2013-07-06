@@ -76,7 +76,7 @@ namespace Twitigo.ViewModels
             this.pinAuthorizer.BeginAuthorize(resp => {});
         }
 
-        private async void PinEnterCommandExecute(object parameter)
+        private void PinEnterCommandExecute(object parameter)
         {
             pinAuthorizer.CompleteAuthorize(
                 this.PinCode,
